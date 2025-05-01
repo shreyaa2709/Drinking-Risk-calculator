@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Drinking Risk Calculator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 font-sans">
+  <div class="max-w-xl mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-6">
+    <h1 class="text-2xl font-bold text-center">Drinking Risk Calculator</h1>
+
+    <form id="riskForm" class="space-y-4">
+      <!-- Step 1 -->
+      <div id="step1">
+        <label class="block">
+          <span>What is your age?</span>
+          <input type="number" id="age" class="mt-1 w-full border p-2 rounded" min="18" required />
+        </label>
+        <label class="block">
+          <span>What is your gender?</span>
+          <select id="gender" class="mt-1 w-full border p-2 rounded" required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+            <option>Prefer not to say</option>
+          </select>
+        </label>
+        <button type="button" onclick="nextStep(2)" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div id="step2" class="hidden">
+        <label class="block">
+          <span>How often do you consume alcohol?</span>
+          <select id="frequency" class="mt-1 w-full border p-2 rounded" required>
+            <option value="">Select</option>
+            <option>Rarely or only on special occasions</option>
+            <option>1–2 times a week</option>
+            <option>3–5 times a week</option>
+            <option>Daily</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span>On average, how many drinks per session?</span>
+          <select id="drinksPerSession" class="mt-1 w-full border p-2 rounded" required>
+            <option value="">Select</option>
+            <option>1 drink</option>
+            <option>2–3 drinks</option>
+            <option>4–5 drinks</option>
+            <option>More than 5 drinks</option>
+          </select>
+        </label>
+
+        <fieldset class="block">
+          <legend class="font-semibold mb-2">What types of alcohol do you usually drink?</legend>
+          <div class="space-y-1">
+            <label><input type="checkbox" value="Beer" class="alcoholType"> Beer</label><br />
+            <label><input type="checkbox" value="Wine" class="alcoholType"> Wine</label><br />
+            <label><input type="checkbox" value="Whisky / Brandy / Rum" class="alcoholType"> Whisky / Brandy / Rum</label><br />
+            <label><input type="checkbox" value="Vodka / Gin" class="alcoholType"> Vodka / Gin</label><br />
+            <label><input type="checkbox" value="Cocktails / Mixed drinks" class="alcoholType"> Cocktails / Mixed drinks</label><br />
+            <label>
+              <input type="checkbox" value="Other" class="alcoholType" id="otherAlcoholCheck">
+              Other:
+              <input type="text" id="otherAlcoholText" class="border p-1 rounded ml-2" disabled>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="block mt-4">
+          <legend class="font-semibold mb-2">Have you experienced any of the following due to alcohol?</legend>
+          <div class="space-y-1">
+            <label><input type="checkbox" value="Blackouts or memory lapses" class="effects"> Blackouts or memory lapses</label><br />
+            <label><input type="checkbox" value="Difficulty at work or school" class="effects"> Difficulty at work or school</label><br />
+            <label><input type="checkbox" value="Relationship issues" class="effects"> Relationship issues</label><br />
+            <label><input type="checkbox" value="Health concerns" class="effects"> Health concerns (e.g., liver, sleep, digestion)</label><br />
+            <label><input type="checkbox" value="None" class="effects"> None of the above</label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded">Submit</button>
+      </div>
+    </form>
+
+    <!-- Output Message -->
+    <div id="output" class="hidden bg-blue-50 p-4 rounded-lg border border-blue-300">
+      <h2 class="text-xl font-semibold mb-2">Thank you for completing the Drinking Risk Calculator.</h2>
+      <p class="text-gray-700">
+        Regardless of the type or amount of alcohol you consume, it’s important to know that:
+      </p>
+      <ul class="list-disc ml-5 my-2 text-gray-700">
+        <li>There is no completely safe level of alcohol use.</li>
+        <li>Even light or occasional drinking may carry health risks over time—especially when it becomes a pattern.</li>
+        <li>Consider speaking with a healthcare provider for personalized support and guidance.</li>
+      </ul>
+      <p class="mt-2 text-gray-800 font-medium">Your health and peace of mind matter, and taking the first step to reflect on your habits is already progress.</p>
+    </div>
+  </div>
+
+  <script>
+    function nextStep(step) {
+      if (step === 2) {
+        const age = document.getElementById("age").value;
+        if (age < 18) {
+          alert("You must be 18 or older.");
+          return;
+        }
+        document.getElementById("step1").classList.add("hidden");
+        document.getElementById("step2").classList.remove("hidden");
+      }
+    }
+
+    document.getElementById("otherAlcoholCheck").addEventListener("change", function () {
+      document.getElementById("otherAlcoholText").disabled = !this.checked;
+    });
+
+    document.getElementById("riskForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // You can collect values here for analytics, display, or backend
+      document.getElementById("riskForm").classList.add("hidden");
+      document.getElementById("output").classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
